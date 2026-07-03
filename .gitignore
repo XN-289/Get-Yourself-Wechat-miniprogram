@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+build/
+target/
+
+# Logs
+*.log
+logs/
+
+# WeChat
+miniprogram/miniprogram_npm/
+miniprogram/node_modules/
+
+# Secrets - NEVER commit real secrets
+*.pem
+*.key
