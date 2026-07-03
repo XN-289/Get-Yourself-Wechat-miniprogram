@@ -40,8 +40,8 @@ spring:
 
 # WeChat Mini Program Configuration
 wechat:
-  appid: ${WECHAT_APPID:wx1234567890abcdef}
-  secret: ${WECHAT_SECRET:your-app-secret-here}
+  appid: ${WECHAT_APPID:YOUR_APPID_HERE}
+  secret: ${WECHAT_SECRET:YOUR_SECRET_HERE}
   template-id: ${WECHAT_TEMPLATE_ID:}
 
 # JWT Configuration
