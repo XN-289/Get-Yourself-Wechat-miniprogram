@@ -47,11 +47,19 @@ public class WechatService {
 
     /**
      * 用 code 换取 openid 和 session_key
-     * 
+     *
      * @param code wx.login() 返回的 code
      * @return openid + session_key，失败返回 errorMessage
      */
     public WechatLoginResult code2session(String code) {
+        // 开发模式：未配置真实appid时，使用模拟登录
+        if (appId == null || appId.isEmpty() || appId.equals("YOUR_APPID_HERE")) {
+            log.info("开发模式：使用模拟登录，code={}", code);
+            // 用code生成固定的openid，保证同一code对应同一用户
+            String mockOpenid = "dev_openid_" + (code != null ? code.hashCode() : "test");
+            return WechatLoginResult.ok(mockOpenid, "dev_session_key", null);
+        }
+
         String url = String.format(CODE2SESSION_URL, appId, secret, code);
         try {
             String response = restTemplate.getForObject(url, String.class);

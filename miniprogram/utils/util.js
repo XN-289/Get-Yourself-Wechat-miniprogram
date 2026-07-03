@@ -122,13 +122,12 @@ function showConfirm(title, content) {
  * 事件分类映射
  */
 const CATEGORY_MAP = {
-  'VOLUNTEER': { label: '志愿公益', color: '#10B981', icon: '🤝' },
-  'INTERNSHIP': { label: '企业实习', color: '#3B82F6', icon: '💼' },
-  'RESEARCH': { label: '科研竞赛', color: '#8B5CF6', icon: '🔬' },
-  'ONLINE': { label: '线上实践', color: '#06B6D4', icon: '💻' },
-  'CULTURE': { label: '文体活动', color: '#F59E0B', icon: '🎭' },
-  'CAMPUS': { label: '校内活动', color: '#EF4444', icon: '🏫' },
-  'SKILL': { label: '技能提升', color: '#EC4899', icon: '📚' }
+  'PUBLIC_WELFARE': { label: '公益', color: '#10B981', icon: '🤝' },
+  'COMPANY': { label: '企业', color: '#3B82F6', icon: '💼' },
+  'RESEARCH': { label: '研究', color: '#8B5CF6', icon: '🔬' },
+  'ONLINE': { label: '线上', color: '#06B6D4', icon: '💻' },
+  'CULTURE': { label: '文化', color: '#F59E0B', icon: '🎭' },
+  'CAMPUS': { label: '校内', color: '#EF4444', icon: '🏫' }
 }
 
 /**

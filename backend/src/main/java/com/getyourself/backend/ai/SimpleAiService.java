@@ -2,8 +2,9 @@ package com.getyourself.backend.ai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.getyourself.backend.entity.Event;
-import com.getyourself.backend.repository.EventRepository;
+import com.getyourself.backend.event.EventCategory;
+import com.getyourself.backend.event.EventEntity;
+import com.getyourself.backend.event.EventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,11 +22,6 @@ import java.util.stream.Collectors;
  * 2. 规则评分作为主要排序，LLM只做最终精排+生成理由
  * 3. LLM不可用时降级为纯规则推荐
  * 4. 候选事件限制为10个，推荐结果限制为3个
- *
- * 成本估算：
- * - 每次推荐消耗约800-1200 token
- * - DeepSeek-V3: ¥0.001/千token
- * - 100日活 × 3次/天 × 30天 = ¥0.27/月
  */
 @Service
 public class SimpleAiService {
@@ -53,16 +49,10 @@ public class SimpleAiService {
 
     /**
      * 事件推荐
-     *
-     * 流程：
-     * 1. 搜索候选事件（关键词 + 分类）
-     * 2. 规则评分（关键词匹配 + 画像匹配）
-     * 3. 单次LLM调用（精排 + 生成理由）
-     * 4. 降级：LLM不可用时直接用规则评分
      */
     public RecommendationResult recommend(String need, String category, String location) {
         // 1. 搜索候选事件
-        List<Event> candidates = searchCandidates(need, category, location);
+        List<EventEntity> candidates = searchCandidates(need, category, location);
         if (candidates.isEmpty()) {
             return RecommendationResult.empty("没有找到匹配的活动");
         }
@@ -94,22 +84,19 @@ public class SimpleAiService {
 
     /**
      * 搜索候选事件
-     * 复用现有EventRepository的查询能力
      */
-    private List<Event> searchCandidates(String need, String category, String location) {
-        // 先尝试精确搜索
-        List<Event> results = eventRepository.findAll().stream()
-                .filter(e -> e.getStatus() == Event.EventStatus.PUBLISHED)
+    private List<EventEntity> searchCandidates(String need, String category, String location) {
+        List<EventEntity> results = eventRepository.findAll().stream()
+                .filter(e -> !e.isExpired())
                 .filter(e -> category == null || category.isEmpty() ||
-                        (e.getCategory() != null && e.getCategory().name().equals(category)))
+                        (e.getCategory() != null && e.getCategory().name().equalsIgnoreCase(category)))
                 .filter(e -> location == null || location.isEmpty() ||
                         (e.getLocation() != null && e.getLocation().contains(location)))
                 .toList();
 
-        // 如果有关键词，进一步过滤
         if (need != null && !need.isEmpty()) {
             String needLower = need.toLowerCase();
-            List<Event> keywordFiltered = results.stream()
+            List<EventEntity> keywordFiltered = results.stream()
                     .filter(e -> matchesKeyword(e, needLower))
                     .toList();
             if (!keywordFiltered.isEmpty()) {
@@ -123,13 +110,14 @@ public class SimpleAiService {
     /**
      * 关键词匹配
      */
-    private boolean matchesKeyword(Event event, String keyword) {
+    private boolean matchesKeyword(EventEntity event, String keyword) {
         String text = String.join(" ",
                 event.getTitle(),
                 event.getOrganizationName(),
                 event.getLocation(),
-                event.getDescription(),
-                event.getCategory() != null ? event.getCategory().getDisplayName() : ""
+                event.getContent(),
+                event.getSkill(),
+                event.getCategory() != null ? event.getCategory().label() : ""
         ).toLowerCase();
 
         for (String word : keyword.split("[\\s,，;；、]+")) {
@@ -142,15 +130,15 @@ public class SimpleAiService {
 
     /**
      * 规则评分
-     * 复用现有项目的评分逻辑
      */
-    private ScoredEvent ruleScore(Event event, String need) {
+    private ScoredEvent ruleScore(EventEntity event, String need) {
         String eventText = String.join(" ",
                 event.getTitle(),
                 event.getOrganizationName(),
                 event.getLocation(),
-                event.getDescription(),
-                event.getCategory() != null ? event.getCategory().getDisplayName() : ""
+                event.getContent(),
+                event.getSkill(),
+                event.getCategory() != null ? event.getCategory().label() : ""
         ).toLowerCase();
 
         String needLower = need != null ? need.toLowerCase() : "";
@@ -196,7 +184,6 @@ public class SimpleAiService {
 
     /**
      * LLM精排
-     * 单次调用，生成排序和推荐理由
      */
     private RecommendationResult llmRerank(List<ScoredEvent> scored, String need) {
         String prompt = buildPrompt(scored, need);
@@ -213,12 +200,12 @@ public class SimpleAiService {
 
         for (int i = 0; i < scored.size(); i++) {
             ScoredEvent se = scored.get(i);
-            Event e = se.event;
+            EventEntity e = se.event;
             sb.append(i + 1).append(". ")
               .append(e.getTitle()).append(" | ")
-              .append(e.getCategory() != null ? e.getCategory().getDisplayName() : "").append(" | ")
+              .append(e.getCategory() != null ? e.getCategory().label() : "").append(" | ")
               .append(e.getLocation()).append(" | ")
-              .append(e.getDescription() != null ? e.getDescription().substring(0, Math.min(100, e.getDescription().length())) : "")
+              .append(e.getContent() != null ? e.getContent().substring(0, Math.min(80, e.getContent().length())) : "")
               .append("\n");
         }
 
@@ -239,13 +226,13 @@ public class SimpleAiService {
         body.put("temperature", 0.3);
         body.put("max_tokens", 500);
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        headers.put("Authorization", "Bearer " + aiApiKey);
-
         try {
+            org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            headers.set("Authorization", "Bearer " + aiApiKey);
+
             org.springframework.http.HttpEntity<Map<String, Object>> request =
-                    new org.springframework.http.HttpEntity<>(body, new org.springframework.http.HttpHeaders());
+                    new org.springframework.http.HttpEntity<>(body, headers);
 
             String response = restTemplate.postForObject(aiApiUrl, request, String.class);
             JsonNode node = objectMapper.readTree(response);
@@ -258,7 +245,6 @@ public class SimpleAiService {
 
     private RecommendationResult parseResponse(String response, List<ScoredEvent> scored) {
         try {
-            // 清理响应，去掉可能的markdown标记
             String json = response.trim();
             if (json.startsWith("```")) {
                 json = json.replaceAll("```json\\s*", "").replaceAll("```\\s*", "");
@@ -316,15 +302,15 @@ public class SimpleAiService {
     }
 
     private boolean isAiEnabled() {
-        return aiApiKey != null && !aiApiKey.isEmpty() && !aiApiKey.equals("your_deepseek_api_key");
+        return aiApiKey != null && !aiApiKey.isEmpty() && !aiApiKey.equals("your_deepseek_api_key") && !aiApiKey.equals("YOUR_SECRET_HERE");
     }
 
     // ========== 内部数据类 ==========
 
-    public record ScoredEvent(Event event, int score, List<String> evidence) {}
+    public record ScoredEvent(EventEntity event, int score, List<String> evidence) {}
 
     public record Recommendation(
-            Event event,
+            EventEntity event,
             int score,
             String reason,
             List<String> evidence

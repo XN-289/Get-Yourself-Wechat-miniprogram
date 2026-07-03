@@ -9,8 +9,8 @@ Page({
     error: '',
     keyword: '',
     activeCategory: '全部',
-    categories: ['全部', '志愿公益', '企业实习', '科研竞赛', '线上实践', '文体活动', '校内活动', '技能提升'],
-    categoryCodes: ['', 'VOLUNTEER', 'INTERNSHIP', 'RESEARCH', 'ONLINE', 'CULTURE', 'CAMPUS', 'SKILL'],
+    categories: ['全部', '公益', '企业', '研究', '线上', '文化', '校内'],
+    categoryCodes: ['', 'PUBLIC_WELFARE', 'COMPANY', 'RESEARCH', 'ONLINE', 'CULTURE', 'CAMPUS'],
     isLoggedIn: false,
     refreshing: false
   },
