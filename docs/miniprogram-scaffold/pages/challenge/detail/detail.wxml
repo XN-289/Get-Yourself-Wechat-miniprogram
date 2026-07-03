@@ -1,0 +1,80 @@
+<!-- pages/challenge/detail/detail.wxml -->
+<view class="page-challenge-detail" wx:if="{{challenge}}">
+
+  <!-- 封面 -->
+  <image class="cover" src="{{challenge.coverImage}}" mode="aspectFill" />
+
+  <!-- 基本信息 -->
+  <view class="card info-card">
+    <text class="title text-xl text-bold">{{challenge.title}}</text>
+    <view class="stats-row mt-md">
+      <view class="stat-item">
+        <text class="stat-num">{{challenge.duration}}</text>
+        <text class="stat-label">天数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{challenge.participantCount}}</text>
+        <text class="stat-label">参与</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{challenge.difficulty}}⭐</text>
+        <text class="stat-label">难度</text>
+      </view>
+    </view>
+    <view class="info-row mt-md">
+      <text class="label">📅 开始</text>
+      <text>{{challenge.startDateText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">🏷 分类</text>
+      <text class="tag">{{challenge.category}}</text>
+    </view>
+  </view>
+
+  <!-- 描述 -->
+  <view class="card">
+    <text class="text-lg text-bold mb-sm">挑战说明</text>
+    <text class="desc-text">{{challenge.description}}</text>
+  </view>
+
+  <!-- 打卡记录 -->
+  <view class="card" wx:if="{{isJoined}}">
+    <text class="text-lg text-bold mb-sm">打卡进度</text>
+    <view class="checkin-grid">
+      <view
+        class="checkin-day {{item.checked ? 'checked' : ''}}"
+        wx:for="{{checkinRecords}}"
+        wx:key="day"
+      >
+        <text class="day-num">{{item.day}}</text>
+        <text class="day-status">{{item.checked ? '✓' : ''}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom">
+    <block wx:if="{{!isJoined}}">
+      <button class="btn btn-primary btn-block" bindtap="onJoinTap">
+        加入挑战
+      </button>
+    </block>
+    <block wx:else>
+      <button
+        class="btn btn-primary btn-block"
+        bindtap="onCheckinTap"
+        disabled="{{todayChecked}}"
+      >
+        {{todayChecked ? '今日已打卡' : '立即打卡'}}
+      </button>
+    </block>
+    <button class="btn btn-outline btn-block mt-sm" open-type="share">
+      分享给好友
+    </button>
+  </view>
+
+</view>
+
+<view wx:if="{{loading}}" class="loading-wrap">
+  <text>加载中...</text>
+</view>

@@ -1,0 +1,45 @@
+<view class="page-index">
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索活动、组织、地点" value="{{keyword}}" bindinput="onSearchInput" bindconfirm="onSearchConfirm" confirm-type="search"/>
+    </view>
+  </view>
+  <view class="ai-banner" bindtap="onAiTap">
+    <view class="ai-banner-content">
+      <text class="ai-banner-icon">✨</text>
+      <view class="ai-banner-text">
+        <text class="ai-banner-title">AI 智能推荐</text>
+        <text class="ai-banner-desc">告诉我你想做什么，帮你找到合适的活动</text>
+      </view>
+    </view>
+    <text class="ai-banner-arrow">›</text>
+  </view>
+  <scroll-view class="category-scroll" scroll-x="true" enhanced="true" show-scrollbar="{{false}}">
+    <view class="category-list">
+      <view wx:for="{{categories}}" wx:key="*this" class="category-item {{activeCategory === item ? 'active' : ''}}" bindtap="onCategoryTap" data-category="{{item}}">{{item}}</view>
+    </view>
+  </scroll-view>
+  <view class="event-list" wx:if="{{!loading && !error && events.length > 0}}">
+    <view wx:for="{{events}}" wx:key="id" class="event-card" bindtap="onEventTap" data-id="{{item.id}}">
+      <view class="event-card-header">
+        <text class="event-tag" style="background:{{item.categoryColor}}20;color:{{item.categoryColor}}">{{item.categoryLabel}}</text>
+        <text class="event-time">{{item.startTimeFormatted}}</text>
+      </view>
+      <text class="event-title">{{item.title}}</text>
+      <text class="event-org">{{item.organizationName}}</text>
+      <view class="event-meta">
+        <text class="event-location">📍 {{item.location}}</text>
+        <text class="event-benefit" wx:if="{{item.benefitType === 'MONEY' || item.benefitType === 'BOTH'}}">💰 {{item.moneyAmount}}元</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{loading}}" class="loading-wrap"><text class="loading-text">加载中...</text></view>
+  <view wx:if="{{!loading && !error && events.length === 0}}" class="empty-wrap">
+    <text class="empty-icon">🔍</text><text class="empty-text">暂无活动</text>
+  </view>
+  <view wx:if="{{error}}" class="empty-wrap">
+    <text class="empty-icon">⚠️</text><text class="empty-text">{{error}}</text>
+    <button class="btn-outline" bindtap="loadEvents">重新加载</button>
+  </view>
+</view>

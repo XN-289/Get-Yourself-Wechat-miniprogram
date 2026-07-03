@@ -1,0 +1,27 @@
+<view class="page-detail">
+  <view wx:if="{{loading}}" class="loading-wrap"><text>加载中...</text></view>
+  <view wx:elif="{{challenge}}" class="content">
+    <view class="hero">
+      <text class="status-badge {{challenge.status}}">{{challenge.status==='ACTIVE'?'进行中':challenge.status==='COMPLETED'?'已完成':'已取消'}}</text>
+      <text class="hero-title">{{challenge.title}}</text>
+      <text class="hero-cat">{{challenge.category}}</text>
+    </view>
+    <view class="info-card" wx:if="{{challenge.goal}}"><text class="label">目标</text><text class="value">{{challenge.goal}}</text></view>
+    <view class="info-card" wx:if="{{challenge.description}}"><text class="label">描述</text><text class="value">{{challenge.description}}</text></view>
+    <view class="info-card"><text class="label">创建时间</text><text class="value">{{challenge.createdAtFormatted}}</text></view>
+    <view class="info-card" wx:if="{{challenge.completedAt}}"><text class="label">完成时间</text><text class="value">{{challenge.completedAtFormatted}}</text></view>
+    <view class="info-card" wx:if="{{challenge.did}}"><text class="label">做了什么</text><text class="value">{{challenge.did}}</text></view>
+    <view class="info-card" wx:if="{{challenge.learned}}"><text class="label">学到了什么</text><text class="value">{{challenge.learned}}</text></view>
+  </view>
+  <view wx:if="{{challenge && challenge.status==='ACTIVE'}}" class="bottom-bar">
+    <button class="btn-primary" style="width:100%;background:var(--color-success)" bindtap="onCompleteTap">标记完成</button>
+  </view>
+  <view wx:if="{{showCompleteForm}}" class="modal-mask" bindtap="onCancelComplete">
+    <view class="modal-content" catchtap="">
+      <text class="modal-title">恭喜完成挑战！</text>
+      <view class="form-group"><text class="form-label">我做了什么</text><textarea class="form-textarea" placeholder="描述你的具体行动..." value="{{did}}" bindinput="onDidInput" maxlength="500"/></view>
+      <view class="form-group"><text class="form-label">我学到了什么</text><textarea class="form-textarea" placeholder="这次挑战的收获..." value="{{learned}}" bindinput="onLearnedInput" maxlength="500"/></view>
+      <view class="modal-actions"><button class="btn-ghost" bindtap="onCancelComplete">取消</button><button class="btn-primary" bindtap="onConfirmComplete" loading="{{completing}}">保存</button></view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,126 @@
+/* pages/ai/recommend/recommend.wxss */
+
+.page-ai-recommend {
+  min-height: 100vh;
+}
+
+/* AI 横幅 */
+.ai-banner {
+  display: flex;
+  align-items: center;
+  padding: 32rpx;
+  background: linear-gradient(135deg, #667EEA, #764BA2);
+  color: #ffffff;
+}
+.ai-emoji {
+  font-size: 64rpx;
+  margin-right: 24rpx;
+}
+.ai-text {
+  flex: 1;
+}
+.ai-text text {
+  display: block;
+  color: #ffffff;
+}
+.ai-text .text-bold {
+  font-size: var(--font-lg);
+  margin-bottom: 4rpx;
+}
+
+/* 标签 */
+.tags-section {
+  padding: 24rpx 24rpx 0;
+}
+.section-label {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 16rpx;
+  display: block;
+}
+.tags-scroll {
+  white-space: nowrap;
+}
+.tag-item {
+  display: inline-block;
+  padding: 10rpx 28rpx;
+  margin-right: 16rpx;
+  border-radius: var(--radius-round);
+  font-size: var(--font-sm);
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  border: 2rpx solid transparent;
+}
+.tag-item.active {
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* 列表 */
+.list-wrap {
+  padding: 24rpx;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.refresh-btn {
+  padding: 8rpx 0;
+}
+
+.recommend-item {
+  display: flex;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+}
+.item-cover {
+  width: 180rpx;
+  height: 140rpx;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+.item-info {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.item-type-tag {
+  display: inline-block;
+  padding: 2rpx 12rpx;
+  margin-right: 8rpx;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-xs);
+  background: var(--color-primary);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+/* 匹配度 */
+.match-bar {
+  flex: 1;
+  height: 8rpx;
+  background: var(--color-border);
+  border-radius: 4rpx;
+  overflow: hidden;
+  max-width: 200rpx;
+}
+.match-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667EEA, #764BA2);
+  border-radius: 4rpx;
+}
+
+.loading-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 120rpx 0;
+  color: var(--color-text-placeholder);
+  font-size: var(--font-md);
+}

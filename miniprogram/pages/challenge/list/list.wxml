@@ -1,0 +1,23 @@
+<view class="page-list">
+  <view class="tab-bar">
+    <view wx:for="{{tabs}}" wx:key="key" class="tab-item {{activeTab===item.key?'active':''}}" bindtap="onTabTap" data-tab="{{item.key}}">{{item.label}}</view>
+  </view>
+  <view class="list" wx:if="{{!loading && challenges.length>0}}">
+    <view wx:for="{{challenges}}" wx:key="id" class="card" bindtap="onChallengeTap" data-id="{{item.id}}">
+      <view class="card-header">
+        <text class="card-title">{{item.title}}</text>
+        <text class="status {{item.status}}">{{item.status==='ACTIVE'?'进行中':item.status==='COMPLETED'?'已完成':'已取消'}}</text>
+      </view>
+      <text class="card-goal" wx:if="{{item.goal}}">目标：{{item.goal}}</text>
+      <view class="card-footer">
+        <text class="card-time">{{item.status==='COMPLETED'?item.completedAtFormatted:item.createdAtFormatted}}</text>
+        <text wx:if="{{item.status==='ACTIVE'}}" class="cancel-btn" catchtap="onCancelChallenge" data-id="{{item.id}}">取消</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{loading}}" class="loading-wrap"><text>加载中...</text></view>
+  <view wx:if="{{!loading && challenges.length===0}}" class="empty-wrap">
+    <text class="empty-icon">🎯</text><text class="empty-text">还没有挑战</text>
+  </view>
+  <view class="fab" bindtap="onCreateTap"><text class="fab-icon">+</text></view>
+</view>

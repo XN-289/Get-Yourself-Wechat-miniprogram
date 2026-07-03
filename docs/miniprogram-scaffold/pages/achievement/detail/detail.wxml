@@ -1,0 +1,55 @@
+<!-- pages/achievement/detail/detail.wxml -->
+<view class="page-ach-detail" wx:if="{{achievement}}">
+
+  <!-- 成就图标 -->
+  <view class="ach-hero">
+    <view class="ach-icon-large">
+      <image src="{{achievement.icon}}" mode="aspectFit" class="icon-img" />
+      <view wx:if="{{!achievement.unlocked}}" class="lock-badge">🔒</view>
+    </view>
+    <text class="ach-name text-xxl text-bold mt-lg">{{achievement.name}}</text>
+    <text class="ach-desc text-md text-secondary mt-sm">{{achievement.description}}</text>
+  </view>
+
+  <!-- 解锁信息 -->
+  <view class="card" wx:if="{{achievement.unlocked}}">
+    <view class="info-row">
+      <text class="label">🏆 状态</text>
+      <text class="text-success">已解锁</text>
+    </view>
+    <view class="info-row" wx:if="{{achievement.unlockedAtText}}">
+      <text class="label">📅 解锁时间</text>
+      <text>{{achievement.unlockedAtText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">⭐ 积分</text>
+      <text class="text-primary">+{{achievement.points}}</text>
+    </view>
+  </view>
+
+  <!-- 解锁条件 -->
+  <view class="card" wx:if="{{!achievement.unlocked}}">
+    <text class="text-lg text-bold mb-sm">解锁条件</text>
+    <text class="text-md">{{achievement.unlockCondition}}</text>
+    <view class="progress-section mt-md">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{achievement.progress || 0}}%;" />
+      </view>
+      <text class="text-sm text-secondary mt-sm">
+        当前进度: {{achievement.currentValue || 0}} / {{achievement.targetValue || 0}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 分享 -->
+  <view class="share-section" wx:if="{{achievement.unlocked}}">
+    <button class="btn btn-primary btn-block" open-type="share">
+      分享成就
+    </button>
+  </view>
+
+</view>
+
+<view wx:if="{{loading}}" class="loading-wrap">
+  <text>加载中...</text>
+</view>

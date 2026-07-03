@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="card">
+    <view class="form-group">
+      <text class="form-label">头像</text>
+      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image wx:if="{{avatarUrl}}" class="avatar-preview" src="{{avatarUrl}}" mode="aspectFill"/>
+        <view wx:else class="avatar-placeholder"><text>📷</text></view>
+      </button>
+    </view>
+    <view class="form-group"><text class="form-label">昵称</text><input class="form-input" placeholder="输入昵称" value="{{nickname}}" bindinput="onNicknameInput" maxlength="20" type="nickname"/></view>
+    <view class="form-group"><text class="form-label">学校</text><input class="form-input" placeholder="例如：北京大学" value="{{school}}" bindinput="onSchoolInput" maxlength="50"/></view>
+    <view class="form-group"><text class="form-label">专业</text><input class="form-input" placeholder="例如：计算机科学与技术" value="{{major}}" bindinput="onMajorInput" maxlength="50"/></view>
+  </view>
+  <button class="btn-primary" style="width:100%;margin-top:40rpx" bindtap="onSave" loading="{{saving}}">保存</button>
+</view>

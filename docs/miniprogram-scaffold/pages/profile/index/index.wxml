@@ -1,0 +1,65 @@
+<!-- pages/profile/index/index.wxml -->
+<view class="page-profile">
+
+  <!-- 用户信息头部 -->
+  <view class="profile-header" bindtap="onAvatarTap">
+    <view class="avatar-wrap">
+      <image
+        class="avatar"
+        src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}"
+        mode="aspectFill"
+      />
+    </view>
+    <view class="user-info">
+      <text class="nickname text-xl text-bold">{{userInfo.nickName || '未登录'}}</text>
+      <text class="text-sm text-secondary mt-xs">点击查看个人资料</text>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+
+  <!-- 数据统计 -->
+  <view class="stats-card card">
+    <view class="stat-item" bindtap="onMenuTap" data-url="/pages/event/search/search">
+      <text class="stat-num">{{stats.eventsJoined}}</text>
+      <text class="stat-label">参与活动</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="onMenuTap" data-url="/pages/challenge/list/list">
+      <text class="stat-num">{{stats.challengesJoined}}</text>
+      <text class="stat-label">参与挑战</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="onMenuTap" data-url="/pages/achievement/list/list">
+      <text class="stat-num">{{stats.achievementsUnlocked}}</text>
+      <text class="stat-label">解锁成就</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalPoints}}</text>
+      <text class="stat-label">积分</text>
+    </view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-card card">
+    <view
+      class="menu-item"
+      wx:for="{{menuList}}"
+      wx:key="id"
+      bindtap="onMenuTap"
+      data-url="{{item.url}}"
+    >
+      <view class="menu-left">
+        <text class="menu-icon">{{item.icon}}</text>
+        <text class="menu-text">{{item.text}}</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section">
+    <button class="btn btn-outline btn-block" bindtap="onLogout">退出登录</button>
+  </view>
+
+</view>

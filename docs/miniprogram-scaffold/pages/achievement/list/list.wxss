@@ -1,0 +1,100 @@
+/* pages/achievement/list/list.wxss */
+
+.page-achievement-list {
+  min-height: 100vh;
+}
+
+/* 统计横幅 */
+.stats-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 40rpx 32rpx;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: #ffffff;
+}
+.stats-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stats-num {
+  font-size: var(--font-xxl);
+  font-weight: 700;
+}
+.stats-label {
+  font-size: var(--font-sm);
+  opacity: 0.85;
+  margin-top: 4rpx;
+}
+.stats-divider {
+  width: 1rpx;
+  height: 60rpx;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 列表 */
+.list-wrap {
+  padding: 24rpx;
+}
+.achievement-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+}
+.achievement-item.locked {
+  opacity: 0.65;
+}
+
+.ach-icon-wrap {
+  position: relative;
+  width: 100rpx;
+  height: 100rpx;
+  flex-shrink: 0;
+  margin-right: 24rpx;
+}
+.ach-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: var(--radius-md);
+}
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+}
+
+.ach-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 进度条 */
+.progress-bar {
+  height: 8rpx;
+  background: var(--color-border);
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 4rpx;
+  transition: width 0.3s;
+}
+
+.loading-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 100rpx 0;
+  color: var(--color-text-placeholder);
+}

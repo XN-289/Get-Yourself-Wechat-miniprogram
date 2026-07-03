@@ -1,0 +1,29 @@
+<view class="page-detail">
+  <view wx:if="{{loading}}" class="loading-wrap"><text>加载中...</text></view>
+  <view wx:elif="{{record}}" class="content">
+    <view class="hero">
+      <view class="tag" style="background:{{record.categoryColor}}30;color:{{record.categoryColor}}">{{record.categoryLabel}}</view>
+      <text class="hero-title">{{record.eventTitle}}</text>
+      <text class="hero-org">{{record.organizationName}}</text>
+      <text class="hero-time">{{record.completedAtFormatted}}</text>
+    </view>
+    <view class="info-card"><text class="label">活动内容</text><text class="value">{{record.content}}</text></view>
+    <view class="info-card" wx:if="{{record.skill}}"><text class="label">相关技能</text><text class="value">{{record.skill}}</text></view>
+    <view class="info-card" wx:if="{{record.location}}"><text class="label">地点</text><text class="value">{{record.location}}</text></view>
+    <view class="reflection-section">
+      <view class="reflection-header">
+        <text class="section-title">我的反思</text>
+        <text wx:if="{{!editing}}" class="edit-btn" bindtap="onEditTap">编辑</text>
+      </view>
+      <view wx:if="{{!editing}}" class="reflection-content">
+        <view class="ref-block"><text class="ref-label">我做了什么</text><text class="ref-text {{record.did?'':'empty'}}">{{record.did || '还没有记录，点击编辑添加'}}</text></view>
+        <view class="ref-block"><text class="ref-label">我学到了什么</text><text class="ref-text {{record.learned?'':'empty'}}">{{record.learned || '还没有记录，点击编辑添加'}}</text></view>
+      </view>
+      <view wx:else class="reflection-edit">
+        <view class="form-group"><text class="form-label">我做了什么</text><textarea class="form-textarea" placeholder="描述你的具体行动..." value="{{did}}" bindinput="onDidInput" maxlength="500"/></view>
+        <view class="form-group"><text class="form-label">我学到了什么</text><textarea class="form-textarea" placeholder="这次经历的收获..." value="{{learned}}" bindinput="onLearnedInput" maxlength="500"/></view>
+        <view class="edit-actions"><button class="btn-ghost" bindtap="onCancelEdit">取消</button><button class="btn-primary" bindtap="onSave" loading="{{saving}}">保存</button></view>
+      </view>
+    </view>
+  </view>
+</view>

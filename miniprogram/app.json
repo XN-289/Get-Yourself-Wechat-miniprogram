@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/index/index/index",
+    "pages/event/detail/detail",
+    "pages/event/search/search",
+    "pages/challenge/list/list",
+    "pages/challenge/create/create",
+    "pages/challenge/detail/detail",
+    "pages/achievement/list/list",
+    "pages/achievement/detail/detail",
+    "pages/profile/index/index",
+    "pages/profile/edit/edit",
+    "pages/ai/recommend/recommend"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#4F46E5",
+    "navigationBarTitleText": "Get Yourself",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F5F5",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4F46E5",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index/index",
+        "text": "发现",
+        "iconPath": "images/tab-discover.png",
+        "selectedIconPath": "images/tab-discover-active.png"
+      },
+      {
+        "pagePath": "pages/challenge/list/list",
+        "text": "挑战",
+        "iconPath": "images/tab-challenge.png",
+        "selectedIconPath": "images/tab-challenge-active.png"
+      },
+      {
+        "pagePath": "pages/achievement/list/list",
+        "text": "成就",
+        "iconPath": "images/tab-achievement.png",
+        "selectedIconPath": "images/tab-achievement-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index/index",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

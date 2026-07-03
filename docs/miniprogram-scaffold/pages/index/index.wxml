@@ -1,0 +1,95 @@
+<!-- pages/index/index.wxml -->
+<view class="page-index">
+
+  <!-- 搜索栏 -->
+  <view class="search-bar" bindtap="onSearchTap">
+    <view class="search-input-placeholder">
+      <text class="search-icon">🔍</text>
+      <text>搜索活动、挑战...</text>
+    </view>
+  </view>
+
+  <!-- Banner 轮播 -->
+  <swiper
+    class="banner-swiper"
+    autoplay
+    interval="{{3000}}"
+    circular
+    indicator-dots
+    indicator-color="rgba(255,255,255,0.4)"
+    indicator-active-color="#ffffff"
+  >
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image src="{{item.imageUrl}}" mode="aspectFill" class="banner-img" />
+    </swiper-item>
+  </swiper>
+
+  <!-- AI 推荐入口 -->
+  <view class="ai-entry card" bindtap="onAiRecommendTap">
+    <view class="ai-entry-left">
+      <text class="ai-icon">🤖</text>
+      <view>
+        <text class="text-bold">AI 个性化推荐</text>
+        <text class="text-sm text-secondary mt-xs">根据你的兴趣智能匹配</text>
+      </view>
+    </view>
+    <text class="arrow">›</text>
+  </view>
+
+  <!-- 热门活动 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">🔥 热门活动</text>
+      <text class="section-more text-primary text-sm">查看全部</text>
+    </view>
+    <view class="event-list">
+      <view
+        class="event-card card"
+        wx:for="{{hotEvents}}"
+        wx:key="id"
+        bindtap="onEventTap"
+        data-id="{{item.id}}"
+      >
+        <image class="event-cover" src="{{item.coverImage}}" mode="aspectFill" />
+        <view class="event-info">
+          <text class="event-title text-bold text-ellipsis">{{item.title}}</text>
+          <text class="text-sm text-secondary mt-xs">📅 {{item.dateText}}</text>
+          <view class="flex items-center mt-xs">
+            <text class="tag">{{item.categoryName}}</text>
+            <text class="text-xs text-secondary ml-sm">{{item.participantCount}}人参加</text>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{!hotEvents.length && !loading}}" class="empty-state">
+        <text class="empty-text">暂无热门活动</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最新挑战 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">💪 最新挑战</text>
+      <text class="section-more text-primary text-sm">查看全部</text>
+    </view>
+    <scroll-view scroll-x class="challenge-scroll">
+      <view
+        class="challenge-card"
+        wx:for="{{recentChallenges}}"
+        wx:key="id"
+        bindtap="onChallengeTap"
+        data-id="{{item.id}}"
+      >
+        <image class="challenge-cover" src="{{item.coverImage}}" mode="aspectFill" />
+        <text class="challenge-name text-bold text-ellipsis">{{item.title}}</text>
+        <text class="text-xs text-secondary">{{item.duration}}天挑战</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-wrap">
+    <text>加载中...</text>
+  </view>
+
+</view>

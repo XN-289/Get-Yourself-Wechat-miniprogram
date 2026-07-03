@@ -1,0 +1,16 @@
+{
+  "description": "Get Yourself - 大学生成长记录与机会发现平台",
+  "packOptions": { "ignore": [], "include": [] },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.3.4",
+  "appid": "wxYOUR_APPID_HERE",
+  "projectname": "get-yourself",
+  "condition": {}
+}

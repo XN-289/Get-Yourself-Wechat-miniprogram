@@ -1,0 +1,53 @@
+<!-- pages/event/detail/detail.wxml -->
+<view class="page-event-detail" wx:if="{{event}}">
+
+  <!-- 封面图 -->
+  <image class="cover" src="{{event.coverImage}}" mode="aspectFill" />
+
+  <!-- 基本信息 -->
+  <view class="card info-card">
+    <text class="title text-xl text-bold">{{event.title}}</text>
+    <view class="info-row mt-md">
+      <text class="label">📅 时间</text>
+      <text>{{event.dateText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">📍 地点</text>
+      <text>{{event.location || '线上活动'}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">👥 人数</text>
+      <text>{{event.participantCount || 0}} / {{event.maxParticipants || '不限'}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">🏷 分类</text>
+      <text class="tag">{{event.categoryName}}</text>
+    </view>
+  </view>
+
+  <!-- 活动描述 -->
+  <view class="card">
+    <text class="text-lg text-bold mb-sm">活动详情</text>
+    <rich-text nodes="{{event.description}}" class="desc-content" />
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom">
+    <button
+      class="btn btn-primary btn-block"
+      bindtap="onJoinTap"
+      disabled="{{isJoined}}"
+    >
+      {{isJoined ? '已报名' : '立即报名'}}
+    </button>
+    <button class="btn btn-outline btn-block mt-sm" open-type="share">
+      分享给好友
+    </button>
+  </view>
+
+</view>
+
+<!-- 加载中 -->
+<view wx:if="{{loading}}" class="loading-wrap">
+  <text>加载中...</text>
+</view>

@@ -1,0 +1,54 @@
+<!-- pages/challenge/list/list.wxml -->
+<view class="page-challenge-list">
+
+  <!-- 分类 Tab -->
+  <scroll-view scroll-x class="category-scroll">
+    <view
+      class="category-item {{currentCategory === index ? 'active' : ''}}"
+      wx:for="{{categories}}"
+      wx:key="*this"
+      bindtap="onCategoryTap"
+      data-index="{{index}}"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+
+  <!-- 挑战列表 -->
+  <view class="list-wrap">
+    <view
+      class="challenge-item card"
+      wx:for="{{list}}"
+      wx:key="id"
+      bindtap="onItemTap"
+      data-id="{{item.id}}"
+    >
+      <image class="challenge-cover" src="{{item.coverImage}}" mode="aspectFill" />
+      <view class="challenge-info">
+        <text class="text-bold text-ellipsis">{{item.title}}</text>
+        <text class="text-sm text-secondary mt-xs">{{item.duration}}天 · {{item.participantCount}}人参与</text>
+        <view class="flex items-center mt-xs">
+          <text class="tag">{{item.category}}</text>
+          <text class="text-xs text-secondary ml-sm">难度 {{item.difficulty}}⭐</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{!list.length && !loading}}" class="empty-state">
+      <text class="empty-text">暂无挑战，快来创建一个吧</text>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading-more">
+      <text>加载中...</text>
+    </view>
+    <view wx:if="{{!hasMore && list.length}}" class="no-more">
+      <text>没有更多了</text>
+    </view>
+  </view>
+
+  <!-- 创建按钮 -->
+  <view class="fab-btn" bindtap="onCreateTap">
+    <text>＋</text>
+  </view>
+
+</view>

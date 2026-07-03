@@ -1,0 +1,30 @@
+
+
+<view class="page-search">
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text>🔍</text>
+      <input class="search-input" placeholder="搜索活动、组织、地点" value="{{keyword}}" bindinput="onSearchInput" bindconfirm="onSearchConfirm" focus="true"/>
+    </view>
+  </view>
+  <scroll-view class="category-scroll" scroll-x="true" enhanced="true" show-scrollbar="{{false}}">
+    <view class="category-list">
+      <view wx:for="{{categories}}" wx:key="*this" class="category-item {{activeCategory===item?'active':''}}" bindtap="onCategoryTap" data-category="{{item}}">{{item}}</view>
+    </view>
+  </scroll-view>
+  <view wx:if="{{loading}}" class="loading-wrap"><text>搜索中...</text></view>
+  <view wx:elif="{{searched && events.length===0}}" class="empty-wrap"><text class="empty-icon">🔍</text><text class="empty-text">没有找到匹配的活动</text></view>
+  <view wx:elif="{{events.length>0}}" class="result-list">
+    <text class="result-count">找到 {{events.length}} 个活动</text>
+    <view wx:for="{{events}}" wx:key="id" class="event-card" bindtap="onEventTap" data-id="{{item.id}}">
+      <view class="card-header">
+        <text class="tag" style="background:{{item.categoryColor}}20;color:{{item.categoryColor}}">{{item.categoryLabel}}</text>
+        <text class="time">{{item.startTimeFormatted}}</text>
+      </view>
+      <text class="title">{{item.title}}</text>
+      <text class="org">{{item.organizationName}}</text>
+      <text class="loc">📍 {{item.location}}</text>
+    </view>
+  </view>
+</view>
+

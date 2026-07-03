@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="card">
+    <view class="form-group">
+      <text class="form-label">挑战标题 *</text>
+      <input class="form-input" placeholder="例如：30天学会Python基础" value="{{title}}" bindinput="onTitleInput" maxlength="50"/>
+    </view>
+    <view class="form-group">
+      <text class="form-label">分类 *</text>
+      <picker mode="selector" range="{{categories}}" bindchange="onCategoryChange">
+        <view class="form-input" style="display:flex;justify-content:space-between;align-items:center">
+          <text>{{category || '选择分类'}}</text>
+          <text style="color:var(--color-text-light)">▾</text>
+        </view>
+      </picker>
+    </view>
+    <view class="form-group">
+      <text class="form-label">目标</text>
+      <input class="form-input" placeholder="你希望达到什么结果？" value="{{goal}}" bindinput="onGoalInput" maxlength="100"/>
+    </view>
+    <view class="form-group">
+      <text class="form-label">描述</text>
+      <textarea class="form-textarea" placeholder="详细描述你的挑战计划..." value="{{description}}" bindinput="onDescInput" maxlength="500"/>
+    </view>
+  </view>
+  <button class="btn-primary" style="width:100%;margin-top:40rpx" bindtap="onSubmit" loading="{{submitting}}">创建挑战</button>
+</view>

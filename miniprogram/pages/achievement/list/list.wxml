@@ -1,0 +1,35 @@
+<view class="page-achievement">
+  <view class="stats-header" wx:if="{{summary}}">
+    <view class="stats-grid">
+      <view class="stat-item"><text class="stat-num">{{summary.completedCount || 0}}</text><text class="stat-label">完成记录</text></view>
+      <view class="stat-item"><text class="stat-num">{{summary.categoryCount || 0}}</text><text class="stat-label">覆盖类别</text></view>
+    </view>
+    <view class="ability-section" wx:if="{{radarData.length > 0}}">
+      <text class="ability-title">能力维度</text>
+      <view wx:for="{{radarData}}" wx:key="name" class="ability-row">
+        <text class="ability-name">{{item.name}}</text>
+        <view class="ability-track"><view class="ability-fill" style="width:{{item.value}}%"></view></view>
+        <text class="ability-score">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="section-header"><text class="section-title">成长记录</text></view>
+  <view class="record-list" wx:if="{{!loading && records.length > 0}}">
+    <view wx:for="{{records}}" wx:key="id" class="record-card" bindtap="onRecordTap" data-id="{{item.id}}">
+      <view class="record-header">
+        <text class="tag" style="background:{{item.categoryColor}}20;color:{{item.categoryColor}}">{{item.categoryLabel}}</text>
+        <text class="record-time">{{item.completedAtFormatted}}</text>
+      </view>
+      <text class="record-title">{{item.eventTitle}}</text>
+      <text class="record-org">{{item.organizationName}}</text>
+      <view class="record-preview" wx:if="{{item.did || item.learned}}">
+        <text class="preview-text">{{item.did || item.learned}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{loading}}" class="loading-wrap"><text>加载中...</text></view>
+  <view wx:if="{{!loading && records.length === 0}}" class="empty-wrap">
+    <text class="empty-icon">🏆</text><text class="empty-text">还没有成长记录</text>
+    <text class="empty-hint">完成活动或挑战后，记录会出现在这里</text>
+  </view>
+</view>

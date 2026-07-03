@@ -1,0 +1,97 @@
+/* pages/profile/edit/edit.wxss */
+
+.page-edit {
+  min-height: 100vh;
+  padding-bottom: 200rpx;
+}
+
+/* 头像区 */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 0;
+}
+.avatar-wrap {
+  position: relative;
+  width: 160rpx;
+  height: 160rpx;
+}
+.avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx solid var(--color-border);
+}
+.avatar-badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-white);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  font-size: 24rpx;
+}
+
+/* 表单 */
+.form-section {
+  padding: 0 24rpx;
+}
+.form-item {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid var(--color-border);
+}
+.form-label {
+  display: block;
+  font-size: var(--font-md);
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+.form-input {
+  height: 80rpx;
+  padding: 0 24rpx;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+}
+.form-textarea {
+  width: 100%;
+  min-height: 160rpx;
+  padding: 20rpx 24rpx;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  box-sizing: border-box;
+}
+
+/* 选择器 */
+.picker-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80rpx;
+  padding: 0 24rpx;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+}
+.picker-arrow {
+  font-size: 36rpx;
+  color: var(--color-text-placeholder);
+}
+
+/* 保存按钮 */
+.submit-section {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20rpx 32rpx;
+  background: var(--color-bg-white);
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.06);
+}

@@ -1,0 +1,4 @@
+.avatar-btn { background: transparent; padding: 0; margin: 0; border: none; line-height: normal; text-align: left; }
+.avatar-btn::after { border: none; }
+.avatar-preview { width: 120rpx; height: 120rpx; border-radius: 50%; }
+.avatar-placeholder { width: 120rpx; height: 120rpx; border-radius: 50%; background: var(--color-bg); display: flex; align-items: center; justify-content: center; font-size: 48rpx; }

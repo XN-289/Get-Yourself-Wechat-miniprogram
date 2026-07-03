@@ -1,0 +1,41 @@
+<view class="page-detail">
+  <view wx:if="{{loading}}" class="loading-wrap"><text>加载中...</text></view>
+  <view wx:elif="{{error}}" class="empty-wrap">
+    <text class="empty-icon">⚠️</text><text class="empty-text">{{error}}</text>
+  </view>
+  <view wx:elif="{{event}}" class="event-content">
+    <view class="hero">
+      <view class="tag" style="background:{{event.categoryColor}}30;color:{{event.categoryColor}}">{{event.categoryLabel}}</view>
+      <text class="hero-title">{{event.title}}</text>
+      <text class="hero-org">{{event.organizationName}}</text>
+    </view>
+    <view class="info-card">
+      <view class="info-row"><text class="info-icon">📅</text><text class="info-text">{{event.startTimeFormatted}}</text></view>
+      <view class="info-row"><text class="info-icon">📍</text><text class="info-text">{{event.location}}</text></view>
+      <view class="info-row" wx:if="{{event.skill}}"><text class="info-icon">📚</text><text class="info-text">{{event.skill}}</text></view>
+      <view class="info-row" wx:if="{{event.benefitType === 'MONEY' || event.benefitType === 'BOTH'}}"><text class="info-icon">💰</text><text class="info-text">{{event.moneyAmount}} 元</text></view>
+    </view>
+    <view class="section"><text class="section-title">活动详情</text><text class="detail-text">{{event.content}}</text></view>
+  </view>
+  <view wx:if="{{event}}" class="bottom-bar">
+    <button wx:if="{{!isReserved}}" class="btn-primary bottom-btn" bindtap="onReserve" loading="{{reserving}}">预约参加</button>
+    <button wx:elif="{{!showCompleteForm}}" class="btn-primary bottom-btn" bindtap="onCompleteTap" style="background:var(--color-success)">标记完成</button>
+  </view>
+  <view wx:if="{{showCompleteForm}}" class="modal-mask" bindtap="onCancelComplete">
+    <view class="modal-content" catchtap="">
+      <text class="modal-title">记录这次成长</text>
+      <view class="form-group">
+        <text class="form-label">我做了什么</text>
+        <textarea class="form-textarea" placeholder="描述你在这次活动中的具体行动..." value="{{did}}" bindinput="onDidInput" maxlength="500"/>
+      </view>
+      <view class="form-group">
+        <text class="form-label">我学到了什么</text>
+        <textarea class="form-textarea" placeholder="这次经历给你带来了什么收获..." value="{{learned}}" bindinput="onLearnedInput" maxlength="500"/>
+      </view>
+      <view class="modal-actions">
+        <button class="btn-ghost" bindtap="onCancelComplete">取消</button>
+        <button class="btn-primary" bindtap="onConfirmComplete" loading="{{completing}}">保存记录</button>
+      </view>
+    </view>
+  </view>
+</view>

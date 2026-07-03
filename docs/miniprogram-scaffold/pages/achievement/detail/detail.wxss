@@ -1,0 +1,78 @@
+/* pages/achievement/detail/detail.wxss */
+
+.page-ach-detail {
+  min-height: 100vh;
+  padding-bottom: 60rpx;
+}
+
+/* 成就头部 */
+.ach-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 32rpx 40rpx;
+  background: linear-gradient(180deg, #FFF5F0 0%, var(--color-bg) 100%);
+}
+.ach-icon-large {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+}
+.icon-img {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 24rpx;
+}
+.lock-badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  background: var(--color-bg-white);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+}
+.info-row .label {
+  width: 180rpx;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+/* 进度 */
+.progress-section {
+  margin-top: 8rpx;
+}
+.progress-bar {
+  height: 12rpx;
+  background: var(--color-border);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+.share-section {
+  padding: 32rpx 24rpx 0;
+}
+
+.loading-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 200rpx 0;
+  color: var(--color-text-placeholder);
+}
